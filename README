@@ -1,2 +1,8 @@
 This repository includes Project Euler solutions written in Go. All the files
 licensed under FreeBSD License. (see LICENSE for details)
+
+You can access explanations for some of the solutions at the following website:
+http://project-euler-answers-in-go.blogspot.com
+
+The archive is generated for fun and practice. All comments and suggestions
+are welcome.
