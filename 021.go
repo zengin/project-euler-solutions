@@ -22,7 +22,11 @@ func sumOfProperDivisors(input int) int {
 	limit, sum := int(math.Sqrt(float64(input))), 0
 	for i := 1; i <= limit; i++ {
 		if input%i == 0 {
-			sum += i + (input / i)
+			if i == input/i {
+				sum += i
+			} else {
+				sum += i + (input / i)
+			}
 		}
 	}
 	return sum - input
