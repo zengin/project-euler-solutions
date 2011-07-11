@@ -1,21 +1,22 @@
 package main
 
 func main() {
-	arr := make([]int, 2000000)
-	for i := range arr {
-		arr[i] = i
-	}
-	i := 2
-	sum := uint64(0)
-	for i < 2000000 {
-		sum += uint64(i)
-		for j := i; j < 2000000; j += i {
-			arr[j] = -1
+	arr := make([]bool, 2000000)
+	arr[0], arr[1] = true, true
+	sum, prime := int64(5), 3
+	var k int
+	for {
+		for k = 2 * prime; k < len(arr); k += prime {
+			arr[k] = true
 		}
-		var c int
-		for c = i; c < 2000000 && arr[c] == -1; c += 1 {
+		for k = prime + 2; k < len(arr) && arr[k]; k += 2 {
 		}
-		i = c
+		if k < len(arr) {
+			prime = k
+			sum += int64(k)
+		} else {
+			break
+		}
 	}
 	println(sum)
 }
