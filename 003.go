@@ -1,43 +1,30 @@
-// prime number generation code is taken from the Go tutorial:
-// http://golang.org/doc/go_tutorial.html#tmp_361
-
 package main
 
 func main() {
 	target := int64(600851475143)
-	ch := make(chan int)
-	go generate(ch)
-	prime, result := 2, 0
-	for int64(prime) < target {
-		//get new prime
-		prime := <-ch
-		if target%int64(prime) == 0 {
-			result = prime
-			//update target
-			for target%int64(prime) == 0 {
-				target = target / int64(prime)
-			}
-		}
-		//filter the channel
-		ch1 := make(chan int)
-		go filter(ch, ch1, prime)
-		ch = ch1
-	}
-	println(result)
-}
-
-func filter(in, out chan int, prime int) {
+	arr := make([]bool, 10000)
+	prime := 3
+	var k int
 	for {
-		i := <-in
-		if i%prime != 0 {
-			out <- i
+		for k = 2 * prime; k < len(arr); k += prime {
+			arr[k] = true
 		}
-	}
-}
-
-func generate(ch chan int) {
-	for i := 2; ; i++ {
-		ch <- i
+		for k = prime + 2; k < len(arr) && arr[k]; k += 2 {
+		}
+		if k < len(arr) {
+			prime = k
+			if target%int64(k) == 0 {
+				target = target / int64(k)
+				if target == 1 {
+					println(k)
+					return
+				}
+			}
+		} else {
+			break
+			//prevent infinite loop in case the answer
+			//is not less than 10000
+		}
 	}
 }
 
