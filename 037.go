@@ -4,75 +4,51 @@ import (
 	"strconv"
 )
 
-var leftArr, rightArr []int
-var leftIndex, rightIndex int
-
 func main() {
-	leftArr, rightArr, leftIndex, rightIndex = make([]int, 10000), make([]int, 10000), 0, 0
 	arr := make([]bool, 1000000)
-	var prime, leftTrunctable, rightTrunctable bool
-	var tmp int
-	arr[2] = true
-	arr[3] = true
-	sum := 0
-	count := 0
-	for i := 5; i < len(arr); i += 2 {
-		prime = true
-		for j := 3; j < i; j += 2 {
-			if arr[j] && i%j == 0 {
-				prime = false
-			}
+	left := make([]bool, 1000000)
+	right := make([]bool, 1000000)
+
+	//manuel setting for the values less than 10
+	left[2], left[3], left[5], left[7] = true, true, true, true
+	right[2], right[3], right[5], right[7] = true, true, true, true
+	arr[0], arr[1], arr[6], arr[9] = true, true, true, true
+	a := []int{3, 5, 7}
+	for i := range a {
+		for k := a[i] * 2; k < len(arr); k += a[i] {
+			arr[k] = true
 		}
-		if prime {
-			arr[i], rightTrunctable, leftTrunctable = true, true, true
-			if !isRightTrunctable(i / 10) {
-				rightTrunctable = false
-			}
-			tmp, _ = strconv.Atoi(strconv.Itoa(i)[1:])
-			if !isLeftTrunctable(tmp) {
-				leftTrunctable = false
-			}
-			if rightTrunctable {
-				if leftTrunctable && i > 10 {
-					println(i)
-					count++
-					sum += i
+	}
+
+	//calculate other primes and check the condition.
+	var k, tmp int
+	prime, counter, sum := 11, 0, 0
+	for {
+		if right[prime/10] {
+			right[prime] = true
+		}
+		tmp, _ = strconv.Atoi(strconv.Itoa(prime)[1:])
+		if left[tmp] {
+			left[prime] = true
+			if right[prime] {
+				sum += prime
+				counter++
+				if counter == 11 {
+					println(sum)
+					return
 				}
-				rightArr[rightIndex] = i
-				rightIndex++
-			}
-			if leftTrunctable {
-				leftArr[leftIndex] = i
-				leftIndex++
 			}
 		}
-	}
-	println(count, sum)
-}
-
-func isLeftTrunctable(in int) bool {
-	switch in {
-	case 2, 3, 5, 7:
-		return true
-	}
-	for i := 0; i < leftIndex; i++ {
-		if leftArr[i] == in {
-			return true
+		for k = prime * 2; k < len(arr); k += prime {
+			arr[k] = true
+		}
+		for k = prime + 2; k < len(arr) && arr[k]; k += 2 {
+		}
+		if k < len(arr) {
+			prime = k
+		} else {
+			break
 		}
 	}
-	return false
-}
-
-func isRightTrunctable(in int) bool {
-	switch in {
-	case 2, 3, 5, 7:
-		return true
-	}
-	for i := 0; i < rightIndex; i++ {
-		if rightArr[i] == in {
-			return true
-		}
-	}
-	return false
 }
 
