@@ -1,8 +1,16 @@
 This repository includes Project Euler solutions written in Go. All the files
 licensed under FreeBSD License. (see LICENSE for details)
 
-You can access explanations for some of the solutions at the following website:
+Thanks to Go, most of the problems are solved under tenth of a second although
+the requirement was 1 minute.
+
+You can find the problems at:
+http://www.projecteuler.net
+
+I also add these solutions to a blog:
 http://project-euler-answers-in-go.blogspot.com
 
 The archive is generated for fun and practice. All comments and suggestions
-are welcome.
+are welcome. Some performance updates are done to decrease time not only
+asymptotically, but also in real time. So, I sometimes sacrificed
+readability of the code.
