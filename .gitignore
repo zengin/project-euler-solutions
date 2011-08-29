@@ -1,0 +1,8 @@
+# gedit autosave #
+##################
+*~
+
+# compiled source #
+###################
+*.8
+*.out
